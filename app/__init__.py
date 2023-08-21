@@ -15,18 +15,22 @@ def getResult():
 
 @app.route('/predict', methods=['POST'])
 def postInput():
-    #取得前端傳的值
-    insertValues = request.get_json()
-    x1=insertValues['氣壓']
-    x2=insertValues['最高溫度']
-    x3=insertValues['最低溫度']
-    x4=insertValues['相對濕度']
-    x5=insertValues['風速']
-    x6=insertValues['雲量']
-    x7=insertValues['月份']
-    input = np.array([[x1,x2,x3,x4,x5,x6,x7]])
-    
-    result = model.predict(input)
-    print(input)
+    # 取得前端傳的值
+    forecastData = request.get_json()
 
-    return jsonify({'result':str(result)})
+    # 遍歷預報數據
+    results = []
+    for forecast in forecastData:
+        x1 = forecast['氣壓']
+        x2 = forecast['最高溫度']
+        x3 = forecast['最低溫度']
+        x4 = forecast['相對濕度']
+        x5 = forecast['風速']
+        x6 = forecast['雲量']
+        x7 = forecast['月份']
+        
+        input_data = np.array([[x1, x2, x3, x4, x5, x6, x7]])
+        result = model.predict(input_data)
+        results.append({'result': str(result)})
+
+    return jsonify(results)
