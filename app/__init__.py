@@ -14,7 +14,7 @@ def getResult():
     return jsonify({'result':str(result)})
 
 @app.route('/predictNorth', methods=['POST'])
-def postInput():
+def postNorthInput():
     # 取得前端傳的值
     forecastData = request.get_json()
 
@@ -37,7 +37,7 @@ def postInput():
 
 
 @app.route('/predictMiddle', methods=['POST'])
-def postInput():
+def postMiddleInput():
     # 取得前端傳的值
     forecastData = request.get_json()
 
